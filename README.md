@@ -15,9 +15,9 @@ machine learning or other algorithmic approaches.
 
 For more information, see:
 
-* [User's Guide](https://techdocs.ed-fi.org/display/SDG/User+Guide)
+* [User's Guide](https://techdocs.ed-fi.org/x/loXpAg)
 * [Developer's
-  Guide](https://techdocs.ed-fi.org/display/SDG/Developers%27+Guide)
+  Guide](https://techdocs.ed-fi.org/x/l52IBg)
 
 ## Roadmap
 
