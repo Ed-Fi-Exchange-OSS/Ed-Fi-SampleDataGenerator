@@ -1,5 +1,9 @@
 # Ed-Fi-SampleDataGenerator
 
+| ❌ No longer supported ❌ |
+| -- |
+| The Sample Data generator is no longer actively supported by the Ed-Fi Alliance. |
+
 The Sample Data Generator produces realistic, cohesive, and 100% fictional
 datasets for use in demonstrations and testing.
 
