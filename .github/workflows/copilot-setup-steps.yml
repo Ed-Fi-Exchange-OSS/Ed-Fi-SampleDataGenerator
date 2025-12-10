@@ -5,6 +5,9 @@
 
 name: Copilot Setup Steps
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/copilot-setup-steps.yml'
   workflow_dispatch:
 
 jobs:
@@ -19,9 +22,9 @@ jobs:
         working-directory: ./src
 
     steps:
-    - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
     - name: Setup .NET
-      uses: actions/setup-dotnet@499789684c9a0d41c9b3f0d66a785ba17b1d51ab # v1.9.0
+      uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies

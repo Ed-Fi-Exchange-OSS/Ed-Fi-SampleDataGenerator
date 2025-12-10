@@ -26,6 +26,7 @@ This is a C# .NET project for the Ed-Fi Sample Data Generator (SDG), which produ
 ### General Guidelines
 
 - Follow the existing code style and conventions in the repository
+- Adhere to the `.editorconfig` file settings for formatting and style
 - Use meaningful variable and method names
 - Keep methods small and focused on a single responsibility
 - Write XML documentation comments for public APIs
