@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyTitle>EdFi.InterchangeXmlToCsv.Console.UnitTests</AssemblyTitle>
     <Product>EdFi.InterchangeXmlToCsv.Console.UnitTests</Product>
     <Copyright>Copyright ©  2022</Copyright>

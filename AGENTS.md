@@ -10,7 +10,7 @@ This is a C# .NET project for the Ed-Fi Sample Data Generator (SDG), which produ
 
 ### Prerequisites
 
-- .NET 6.0 SDK or later
+- .NET 10.0 SDK or later
 - A C# compatible IDE (Visual Studio, Visual Studio Code, or JetBrains Rider)
 
 ### Setup Steps
