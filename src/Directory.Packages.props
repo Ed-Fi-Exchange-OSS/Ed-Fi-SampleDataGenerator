@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="AutoMapper" Version="10.1.1" />
+    <PackageVersion Include="Castle.Core" Version="4.4.1" />
+    <PackageVersion Include="CloneExtensions" Version="1.4.2" />
+    <PackageVersion Include="CommandLineParser" Version="2.8.0" />
+    <PackageVersion Include="CsvHelper" Version="3.0.0-beta7" />
+    <PackageVersion Include="EdFi.Common" Version="5.0.0" />
+    <PackageVersion Include="FluentValidation" Version="10.3.4" />
+    <PackageVersion Include="log4net" Version="2.0.13" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageVersion Include="Moq" Version="4.16.1" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageVersion Include="NUnit" Version="3.13.2" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.1.0" />
+    <PackageVersion Include="Shouldly" Version="4.0.3" />
+    <PackageVersion Include="System.Data.SQLite" Version="1.0.115.5" />
+  </ItemGroup>
+</Project>

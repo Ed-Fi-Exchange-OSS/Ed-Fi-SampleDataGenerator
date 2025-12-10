@@ -18,11 +18,11 @@
         <DebugType>pdbonly</DebugType>
       </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.8.0" />
-        <PackageReference Include="CsvHelper" Version="3.0.0-beta7" />
-        <PackageReference Include="FluentValidation" Version="10.3.4" />
-        <PackageReference Include="log4net" Version="2.0.13" />
-        <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+        <PackageReference Include="CommandLineParser" />
+        <PackageReference Include="CsvHelper" />
+        <PackageReference Include="FluentValidation" />
+        <PackageReference Include="log4net" />
+        <PackageReference Include="System.Data.SQLite" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\EdFi.SampleDataGenerator.Core\EdFi.SampleDataGenerator.Core.csproj" />
