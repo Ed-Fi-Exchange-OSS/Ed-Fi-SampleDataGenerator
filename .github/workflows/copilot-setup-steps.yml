@@ -11,11 +11,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup:
-    name: Setup
+  copilot-setup-steps:
+    name: Copilot Setup Steps
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    permissions: read-all
 
     defaults:
       run:
