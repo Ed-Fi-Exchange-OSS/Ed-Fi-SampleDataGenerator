@@ -1,6 +1,4 @@
 ﻿
-using EdFi.Ods.Common;
-
 namespace EdFi.SampleDataGenerator.Core.DataGeneration.Common.Interchanges
 {
     public sealed partial class Interchange : Enumeration<Interchange, string>

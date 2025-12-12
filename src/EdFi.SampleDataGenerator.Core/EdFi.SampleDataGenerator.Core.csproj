@@ -15,7 +15,6 @@
     <PackageReference Include="AutoMapper" />
     <PackageReference Include="CloneExtensions" />
     <PackageReference Include="CsvHelper" />
-    <PackageReference Include="EdFi.Common" />
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="log4net" />
     <PackageReference Include="Newtonsoft.Json" />
