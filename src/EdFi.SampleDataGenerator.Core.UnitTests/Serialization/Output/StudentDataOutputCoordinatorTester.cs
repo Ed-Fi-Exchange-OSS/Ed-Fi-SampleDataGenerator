@@ -36,8 +36,6 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
             StudentDataOutputConfiguration studentDataOutputConfiguration = null;
 
             var studentDataOutputService = A.Fake<IStudentDataOutputService>();
-            
-            
 
             Func<IStudentDataOutputService> outputServiceFactory = () => studentDataOutputService;
             var sut = new StudentDataOutputCoordinator(outputServiceFactory);
@@ -140,12 +138,7 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
 
         private IStudentDataOutputService MockStudentOutputService()
         {
-            var studentDataOutputService = A.Fake<IStudentDataOutputService>();
-            
-            
-            
-
-            return studentDataOutputService;
+            return A.Fake<IStudentDataOutputService>();
         }
     }
 }
