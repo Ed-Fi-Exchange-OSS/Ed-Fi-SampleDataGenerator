@@ -1,6 +1,4 @@
-﻿using EdFi.Ods.Common;
-
-namespace EdFi.SampleDataGenerator.Core.DataGeneration.Common
+﻿namespace EdFi.SampleDataGenerator.Core.DataGeneration.Common
 {
     public sealed class Salutation : Enumeration<Salutation>
     {

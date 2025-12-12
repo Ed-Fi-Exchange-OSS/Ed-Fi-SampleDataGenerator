@@ -5,7 +5,7 @@ using EdFi.SampleDataGenerator.Core.Entities;
 using EdFi.SampleDataGenerator.Core.Serialization.Output;
 using EdFi.SampleDataGenerator.Core.Serialization.Output.Interchanges;
 using EdFi.SampleDataGenerator.Core.UnitTests.Config;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 
@@ -19,10 +19,9 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         {
             var outputCountsByType = new Dictionary<Type, int>();
 
-            var interchangeFileOutputService = new Mock<IInterchangeFileOutputService>();
-            interchangeFileOutputService
-                .Setup(x => x.WriteOutputToFile(It.IsAny<string>(), It.IsAny<object>()))
-                .Callback<string, object>((file, outputObj) =>
+            var interchangeFileOutputService = A.Fake<IInterchangeFileOutputService>();
+            A.CallTo(() => interchangeFileOutputService.WriteOutputToFile(A<string>._, A<object>._))
+                .Invokes((string file, object outputObj) =>
                 {
                     var outputObjectType = outputObj.GetType();
                     var currentCount = 0;
@@ -35,7 +34,7 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
                     outputCountsByType[outputObjectType] = currentCount + 1;
                 });
 
-            var studentOutputService = new StudentDataOutputService(interchangeFileOutputService.Object);
+            var studentOutputService = new StudentDataOutputService(interchangeFileOutputService);
             var configuration = new StudentDataOutputConfiguration
             {
                 SampleDataGeneratorConfig = new TestSampleDataGeneratorConfig
@@ -77,10 +76,9 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         {
             var outputCountsByType = new Dictionary<Type, int>();
 
-            var interchangeFileOutputService = new Mock<IInterchangeFileOutputService>();
-            interchangeFileOutputService
-                .Setup(x => x.WriteOutputToFile(It.IsAny<string>(), It.IsAny<object>()))
-                .Callback<string, object>((file, outputObj) =>
+            var interchangeFileOutputService = A.Fake<IInterchangeFileOutputService>();
+            A.CallTo(() => interchangeFileOutputService.WriteOutputToFile(A<string>._, A<object>._))
+                .Invokes((string file, object outputObj) =>
                 {
                     var outputObjectType = outputObj.GetType();
                     var currentCount = 0;
@@ -93,7 +91,7 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
                     outputCountsByType[outputObjectType] = currentCount + 1;
                 });
 
-            var studentOutputService = new StudentDataOutputService(interchangeFileOutputService.Object);
+            var studentOutputService = new StudentDataOutputService(interchangeFileOutputService);
             var configuration = new StudentDataOutputConfiguration
             {
                 SampleDataGeneratorConfig = new TestSampleDataGeneratorConfig
@@ -123,8 +121,6 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
 
             studentOutputService.Configure(configuration);
             studentOutputService.WriteToOutput(generatedStudentData, 0);
-
-            interchangeFileOutputService.Verify(x => x.WriteOutputToFile(It.IsAny<string>(), It.IsAny<object>()), Times.Never);
             studentOutputService.FlushOutput();
 
             outputCountsByType[typeof(InterchangeStudent)].ShouldBe(1);

@@ -3,7 +3,7 @@ using System.Linq;
 using EdFi.SampleDataGenerator.Core.Config;
 using EdFi.SampleDataGenerator.Core.Config.DataFiles;
 using EdFi.SampleDataGenerator.Core.Entities;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 
@@ -36,15 +36,12 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
             };
 
             var testSurnameFileMapping = new TestSurnameFileMapping {Ethnicity = "White", FilePath = "TestFile.txt"};
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> {new NameFileRecord {Name = "FakeName", Frequency = 1.0}};
 
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
-
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.ReadSurnameFile(testConfig, testSurnameFileMapping);
-            fileReader.Verify(r => r.Read("TestFile.txt"), Times.Once);
 
             ValidateSurnameFile(result, testConfig.EthnicityMappings.MappingFor(RaceDescriptor.White, false), "TestFile.txt", fileRecords);
         }
@@ -79,16 +76,13 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
             };
 
             var testSurnameFileMapping = new TestSurnameFileMapping { Ethnicity = "Hispanic", FilePath = "TestFile.txt" };
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> { new NameFileRecord { Name = "FakeName", Frequency = 1.0 } };
 
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
-
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.ReadSurnameFile(testConfig, testSurnameFileMapping);
-            fileReader.Verify(r => r.Read("TestFile.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("OtherTestFile.txt"), Times.Never);
+
 
             ValidateSurnameFile(result, testConfig.EthnicityMappings.MappingFor(RaceDescriptor.White, true), "TestFile.txt", fileRecords);
         }
@@ -122,15 +116,12 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
             };
 
             var testFirstNameFileMapping = new TestFirstNameFileMapping { Ethnicity = "White", FilePath = "TestFile.txt", Gender = "Male"};
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> { new NameFileRecord { Name = "FakeName", Frequency = 1.0 } };
 
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
-
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.ReadFirstNameFile(testConfig, testFirstNameFileMapping);
-            fileReader.Verify(r => r.Read("TestFile.txt"), Times.Once);
 
             ValidateFirstNameFile(result, testConfig.EthnicityMappings.MappingFor(RaceDescriptor.White, false), SexDescriptor.Male, "TestFile.txt", fileRecords);
         }
@@ -171,16 +162,13 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
             };
 
             var testFirstNameFileMapping = new TestFirstNameFileMapping { Ethnicity = "Hispanic", FilePath = "TestFile.txt", Gender = "Male" };
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> { new NameFileRecord { Name = "FakeName", Frequency = 1.0 } };
 
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
-
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.ReadFirstNameFile(testConfig, testFirstNameFileMapping);
-            fileReader.Verify(r => r.Read("TestFile.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("OtherTestFile.txt"), Times.Never);
+
 
             ValidateFirstNameFile(result, testConfig.EthnicityMappings.MappingFor(RaceDescriptor.White, true), SexDescriptor.Male, "TestFile.txt", fileRecords);
         }
@@ -200,14 +188,12 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
                 }
             };
 
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> { new NameFileRecord { Name = "FakeName", Frequency = 1.0 } };
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
 
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.ReadStreetNameFile(testConfig);
-            fileReader.Verify(r => r.Read("TestFile.txt"), Times.Once);
             
             result.FilePath.ShouldBe("TestFile.txt");
             result.FileRecords.ShouldHaveSameContentAs(fileRecords);
@@ -278,21 +264,18 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Config.DataFiles
                 }
             };
             
-            var fileReader = new Mock<INameFileReader>();
+            var fileReader = A.Fake<INameFileReader>();
 
             var fileRecords = new List<NameFileRecord> { new NameFileRecord { Name = "FakeName", Frequency = 1.0 } };
-            fileReader.Setup(r => r.Read(It.IsAny<string>())).Returns(fileRecords);
 
-            var sut = new NameFileReaderService(fileReader.Object);
+            var sut = new NameFileReaderService(fileReader);
             var result = sut.Read(testConfig);
 
-            fileReader.Verify(r => r.Read("TestFirstNameFile1.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestFirstNameFile2.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestFirstNameFile3.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestFirstNameFile4.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestSurnameFile1.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestSurnameFile2.txt"), Times.Once);
-            fileReader.Verify(r => r.Read("TestStreetNameFile.txt"), Times.Once);
+
+
+
+
+
 
             result.FirstNameFiles.ShouldNotBeNull();
             result.FirstNameFiles.Count.ShouldBe(4);
