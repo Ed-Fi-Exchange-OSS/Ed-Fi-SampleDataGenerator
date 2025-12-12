@@ -61,8 +61,8 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.DataGeneration.Coordination
 
         private RandomNumberGenerator randomNumberGenerator;
         private StubInterchangeFileOutputService fileOutputService;
-        private A.Fake<IBufferedEntityOutputService<MutationLogEntry, MutationLogOutputConfiguration>> mutationLogOutputService;
-        private A.Fake<IGlobalMutator> mutator;
+        private IBufferedEntityOutputService<MutationLogEntry, MutationLogOutputConfiguration> mutationLogOutputService;
+        private IGlobalMutator mutator;
         private GlobalDataGenerationCoordinator globalDataGenerationCoordinator;
         private IDataPeriod dataPeriod1;
         private IDataPeriod dataPeriod2;

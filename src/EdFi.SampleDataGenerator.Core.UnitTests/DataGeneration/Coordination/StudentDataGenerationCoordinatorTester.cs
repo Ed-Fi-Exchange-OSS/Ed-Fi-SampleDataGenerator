@@ -305,9 +305,9 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.DataGeneration.Coordination
             
             
             var mutator = A.Fake<IStudentMutator>();
-            mutator.Setup(x => x.InterchangeEntity).Returns(InterchangeEntity.Student);
-            mutator.Setup(x => x.Entity).Returns(StudentEntity.Student);
-            mutator.Setup(x => x.EntityField).Returns(StudentField.Name);
+            A.CallTo(() => mutator.InterchangeEntity).Returns(InterchangeEntity.Student);
+            A.CallTo(() => mutator.Entity).Returns(StudentEntity.Student);
+            A.CallTo(() => mutator.EntityField).Returns(StudentField.Name);
             StudentDataGenerationCoordinator.MutatorFactoryDelegate mutatorFactory = rng => mutator.Yield();
             var studentDataGenerationCoordinator = new StudentDataGenerationCoordinator
             (

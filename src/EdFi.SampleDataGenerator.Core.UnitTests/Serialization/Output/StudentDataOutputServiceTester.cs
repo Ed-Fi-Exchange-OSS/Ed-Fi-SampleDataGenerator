@@ -20,9 +20,8 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
             var outputCountsByType = new Dictionary<Type, int>();
 
             var interchangeFileOutputService = A.Fake<IInterchangeFileOutputService>();
-            interchangeFileOutputService
-                .Setup(x => x.WriteOutputToFile(A<string>._, A<object>._))
-                .Invokes((file, outputObj) =>
+            A.CallTo(() => interchangeFileOutputService.WriteOutputToFile(A<string>._, A<object>._))
+                .Invokes((string file, object outputObj) =>
                 {
                     var outputObjectType = outputObj.GetType();
                     var currentCount = 0;
@@ -78,9 +77,8 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
             var outputCountsByType = new Dictionary<Type, int>();
 
             var interchangeFileOutputService = A.Fake<IInterchangeFileOutputService>();
-            interchangeFileOutputService
-                .Setup(x => x.WriteOutputToFile(A<string>._, A<object>._))
-                .Invokes((file, outputObj) =>
+            A.CallTo(() => interchangeFileOutputService.WriteOutputToFile(A<string>._, A<object>._))
+                .Invokes((string file, object outputObj) =>
                 {
                     var outputObjectType = outputObj.GetType();
                     var currentCount = 0;

@@ -138,7 +138,7 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
             sut.FinalizeOutput(TestSchoolProfile.Default, TestDataPeriod.Default.Yield());
         }
 
-        private A.Fake<IStudentDataOutputService> MockStudentOutputService()
+        private IStudentDataOutputService MockStudentOutputService()
         {
             var studentDataOutputService = A.Fake<IStudentDataOutputService>();
             
