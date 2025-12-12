@@ -15,6 +15,7 @@
     <PackageReference Include="AutoMapper" />
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="CsvHelper" />
+    <PackageReference Include="FakeItEasy" />
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
