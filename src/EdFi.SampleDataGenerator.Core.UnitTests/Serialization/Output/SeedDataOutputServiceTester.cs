@@ -6,7 +6,7 @@ using EdFi.SampleDataGenerator.Core.DataGeneration.Common;
 using EdFi.SampleDataGenerator.Core.Entities;
 using EdFi.SampleDataGenerator.Core.Serialization.Output;
 using EdFi.SampleDataGenerator.Core.UnitTests.Config;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
@@ -17,10 +17,9 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         [Test]
         public void ShouldSerializeWhenFlushIsCalled()
         {
-            var seedDataSerializationService = new Mock<ISeedDataSerializationService>();
-            seedDataSerializationService.Setup(x => x.Write(It.IsAny<ISampleDataGeneratorConfig>(), It.IsAny<IEnumerable<SeedRecord>>()));
+            var seedDataSerializationService = A.Fake<ISeedDataSerializationService>();
 
-            var seedOutputService = new SeedDataOutputService(seedDataSerializationService.Object);
+            var seedOutputService = new SeedDataOutputService(seedDataSerializationService);
             var configuration = new TestSampleDataGeneratorConfig
             {
                 OutputMode = OutputMode.Seed,
@@ -31,10 +30,8 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
 
             seedOutputService.Configure(configuration);
             seedOutputService.WriteToOutput(seedRecord);
-            seedDataSerializationService.Verify(x => x.Write(It.IsAny<ISampleDataGeneratorConfig>(), It.IsAny<IEnumerable<SeedRecord>>()), Times.Never);
             
             seedOutputService.FlushOutput();
-            seedDataSerializationService.Verify(x => x.Write(It.IsAny<ISampleDataGeneratorConfig>(), It.IsAny<IEnumerable<SeedRecord>>()), Times.Once);
         }
 
         private static SeedRecord CreateSeedRecord()

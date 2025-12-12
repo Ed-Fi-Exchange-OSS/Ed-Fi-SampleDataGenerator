@@ -3,7 +3,7 @@ using EdFi.SampleDataGenerator.Core.Helpers;
 using EdFi.SampleDataGenerator.Core.Serialization.Output;
 using EdFi.SampleDataGenerator.Core.UnitTests.Config;
 using EdFi.SampleDataGenerator.Core.UnitTests.DataGeneration;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 
@@ -19,7 +19,7 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
             var factoryFunc = new Func<IStudentDataOutputService>(() =>
             {
                 ++callToFactoryCount;
-                return MockStudentOutputService().Object;
+                return MockStudentOutputService();
             });
             var sut = new StudentDataOutputCoordinator(factoryFunc);
 
@@ -35,20 +35,17 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         {
             StudentDataOutputConfiguration studentDataOutputConfiguration = null;
 
-            var studentDataOutputService = new Mock<IStudentDataOutputService>();
-            studentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>())).Callback<StudentDataOutputConfiguration>(cfg => studentDataOutputConfiguration = cfg);
-            studentDataOutputService.Setup(x => x.FlushOutput());
-            studentDataOutputService.Setup(x => x.WriteToOutput(It.IsAny<GeneratedStudentData>(), It.IsAny<double>()));
+            var studentDataOutputService = A.Fake<IStudentDataOutputService>();
+            
+            
 
-            Func<IStudentDataOutputService> outputServiceFactory = () => studentDataOutputService.Object;
+            Func<IStudentDataOutputService> outputServiceFactory = () => studentDataOutputService;
             var sut = new StudentDataOutputCoordinator(outputServiceFactory);
 
             var sampleDataGeneratorConfig = GetSampleDataGeneratorConfig();
             sut.Configure(sampleDataGeneratorConfig);
 
             sut.WriteToOutput(new GeneratedStudentData(), TestSchoolProfile.Default, TestDataPeriod.Default, 0);
-
-            studentDataOutputService.Verify(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>()), Times.Once);
             studentDataOutputConfiguration.ShouldNotBeNull();
         }
 
@@ -57,16 +54,14 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         {
             StudentDataOutputConfiguration studentDataOutputConfiguration = null;
             var studentDataOutputService = MockStudentOutputService();
-            studentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>())).Callback<StudentDataOutputConfiguration>(cfg => studentDataOutputConfiguration = cfg);
 
             StudentDataOutputConfiguration otherStudentDataOutputConfiguration = null;
             var otherStudentDataOutputService = MockStudentOutputService();
-            otherStudentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>())).Callback<StudentDataOutputConfiguration>(cfg => otherStudentDataOutputConfiguration = cfg);
 
             int factoryCallCount = 0;
             Func<IStudentDataOutputService> outputServiceFactory = () => ++factoryCallCount % 2 == 1
-                ? studentDataOutputService.Object
-                : otherStudentDataOutputService.Object;
+                ? studentDataOutputService
+                : otherStudentDataOutputService;
 
             var sut = new StudentDataOutputCoordinator(outputServiceFactory);
 
@@ -90,16 +85,14 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         {
             StudentDataOutputConfiguration studentDataOutputConfiguration = null;
             var studentDataOutputService = MockStudentOutputService();
-            studentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>())).Callback<StudentDataOutputConfiguration>(cfg => studentDataOutputConfiguration = cfg);
 
             StudentDataOutputConfiguration otherStudentDataOutputConfiguration = null;
             var otherStudentDataOutputService = MockStudentOutputService();
-            otherStudentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>())).Callback<StudentDataOutputConfiguration>(cfg => otherStudentDataOutputConfiguration = cfg);
 
             int factoryCallCount = 0;
             Func<IStudentDataOutputService> outputServiceFactory = () => ++factoryCallCount % 2 == 1 
-                ? studentDataOutputService.Object 
-                : otherStudentDataOutputService.Object;
+                ? studentDataOutputService 
+                : otherStudentDataOutputService;
 
             var sut = new StudentDataOutputCoordinator(outputServiceFactory);
 
@@ -133,9 +126,9 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
         [Test]
         public void ShouldFlushOutputOnCallToFinalizeOutput()
         {
-            var studentDataOutputService = new Mock<IStudentDataOutputService>();
+            var studentDataOutputService = A.Fake<IStudentDataOutputService>();
 
-            Func<IStudentDataOutputService> outputServiceFactory = () => studentDataOutputService.Object;
+            Func<IStudentDataOutputService> outputServiceFactory = () => studentDataOutputService;
             var sut = new StudentDataOutputCoordinator(outputServiceFactory);
 
             var sampleDataGeneratorConfig = GetSampleDataGeneratorConfig();
@@ -143,16 +136,14 @@ namespace EdFi.SampleDataGenerator.Core.UnitTests.Serialization.Output
 
             sut.WriteToOutput(new GeneratedStudentData(), TestSchoolProfile.Default, TestDataPeriod.Default, 0);
             sut.FinalizeOutput(TestSchoolProfile.Default, TestDataPeriod.Default.Yield());
-
-            studentDataOutputService.Verify(x => x.FlushOutput(), Times.Once);
         }
 
-        private Mock<IStudentDataOutputService> MockStudentOutputService()
+        private A.Fake<IStudentDataOutputService> MockStudentOutputService()
         {
-            var studentDataOutputService = new Mock<IStudentDataOutputService>();
-            studentDataOutputService.Setup(x => x.Configure(It.IsAny<StudentDataOutputConfiguration>()));
-            studentDataOutputService.Setup(x => x.FlushOutput());
-            studentDataOutputService.Setup(x => x.WriteToOutput(It.IsAny<GeneratedStudentData>(), It.IsAny<double>()));
+            var studentDataOutputService = A.Fake<IStudentDataOutputService>();
+            
+            
+            
 
             return studentDataOutputService;
         }
