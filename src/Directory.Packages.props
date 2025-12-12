@@ -8,7 +8,7 @@
     <PackageVersion Include="CloneExtensions" Version="1.4.2" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
-    <PackageVersion Include="EdFi.Common" Version="5.0.0" />
+    <PackageVersion Include="EdFi.Common" Version="5.2.0" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="log4net" Version="3.2.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
